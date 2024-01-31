@@ -1,6 +1,9 @@
 package com.example.persistenceproject.repository;
 
 import com.example.persistenceproject.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
@@ -81,6 +84,13 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     //find all users whose email contains the string "else" in it
     List<User> findByEmailContaining(String contain);
+
+    Page<User> findAll(Pageable pageable);
+
+    //find all users of a given level sorted first by their registration_date (in descending order) and then by their "username" (in ascending order)
+    List<User> findByLevelOrderByRegistrationDateDescUsernameAsc( Integer level );
+    List<User> findByLevel( Integer level, Sort sort );
+    List<User> findByLevel( Integer level, Pageable pageable );
 
 
 }
