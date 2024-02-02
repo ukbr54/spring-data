@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Version;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
@@ -16,11 +15,11 @@ public class Guide {
     @Column(name = "staff_id",nullable = false,unique = true)
     private String staffId;
     private String name;
-    private String salary;
-    @Version
-    private Integer version;
+    private Integer salary;
+//    @Version
+//    private Integer version;
 
-    public Guide(String staffId, String name, String salary) {
+    public Guide(String staffId, String name, Integer salary) {
         this.staffId = staffId;
         this.name = name;
         this.salary = salary;

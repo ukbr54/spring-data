@@ -6,33 +6,31 @@ import com.example.persistenceproject.service.CollegeManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Component
+//@Component
+//@Order(2)
 public class OptimisticLockingClient implements ApplicationRunner {
 
-    private @Autowired GuideRepository guideRepository;
+    @Autowired
+    private UserClient1 user1Client;
 
-    private @Autowired UserClient1 client1;
-    private @Autowired UserClient2 client2;
+    @Autowired
+    private UserClient2 user2Client;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
-        Guide guide = new Guide("2024FEB001","Mike Lawson","1000");
-        Guide guide1 = new Guide("2024MAR002","Mike Lawson","1000");
-        Guide guide2 = new Guide("2024FEB002","Mike Lawson","1000");
+        ExecutorService executor = Executors.newFixedThreadPool (2);
+        executor.execute(user1Client);
+        executor.execute(user2Client);
 
-        guideRepository.saveAll(Arrays.asList(guide,guide1,guide2));
+        executor.shutdown();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
-        executorService.execute(client1);
-        executorService.execute(client2);
-
-        executorService.shutdown();
     }
 }
