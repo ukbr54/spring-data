@@ -1,6 +1,8 @@
 package com.example.persistenceproject.service;
 
 import com.example.persistenceproject.entity.Guide;
+import com.example.persistenceproject.projection.GuideNameSalary;
+import com.example.persistenceproject.projection.GuideNativeProjection;
 import com.example.persistenceproject.repository.GuideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +73,31 @@ public class CollegeManagementService {
         Guide guide = guideRepository.findById( id ).get();
         guide.setSalary(newSalary);
 
+    }
+
+    @Transactional
+    public void populateDb(){
+        Guide guide1 = new Guide("2000MO10789", "Mike Lawson", 1000);
+        Guide guide2 = new Guide("2000IM10901", "Ian Lamb", 2500);
+        Guide guide3 = new Guide("2000DO10777", "David Crow", 3000);
+
+        guideRepository.saveAll(List.of(guide1,guide2,guide3));
+    }
+
+    @Transactional(readOnly = true)
+    public void displayNameAndSalaryOfFirst3GuidesBySalaryGreaterThan1000(){
+        List<GuideNameSalary> proxies = guideRepository.findFirst3BySalaryGreaterThan(1000);
+        proxies.forEach(p -> {
+            System.out.println("Name: "+p.getName()+"\t\t Salary:"+p.getSalary()+"\t\t Info:"+p.getInfo());
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public void displayNameAndSalaryOfStaffId(){
+        List<GuideNativeProjection> proxies = guideRepository.findByStaffId();
+        proxies.forEach(p -> {
+            System.out.println("Info:"+p.getInfo());
+        });
     }
 
 }
