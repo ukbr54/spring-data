@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class UserClient2 implements Runnable{
     private @Autowired CollegeManagementService collegeManagementService;
 

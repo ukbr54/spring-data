@@ -6,7 +6,7 @@ import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 
 
-@Component
+//@Component
 public class UserYClient implements Runnable {
 
 	@Autowired
