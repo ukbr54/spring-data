@@ -1,10 +1,13 @@
 package com.example.persistenceproject.repository;
 
 import com.example.persistenceproject.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -93,4 +96,16 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findByLevel( Integer level, Pageable pageable );
 
 
+    @Transactional
+    Integer deleteByLevel(Integer level);
+
+    @Transactional
+    @Modifying
+    @Query("delete from User u where u.level = :level")
+    Integer deleteInBulkByLevel(Integer level);
+
+    @Transactional
+    @Modifying
+    @Query("update versioned User u set u.level = u.level+1 where u.registrationDate < ?1 and u.isActive = true")
+    Integer updateInBulk(LocalDate registrationDate);
 }

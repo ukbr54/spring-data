@@ -23,9 +23,23 @@ public class Student implements Serializable {
     @Column(name = "enrollment_id",nullable = false,unique = true)
     private String enrollmentId;
 
+    //Owner side
+    @ManyToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER /* Default fetch type for manytoone*/)
+    @JoinColumn(name = "guide_id")
+    private Guide guide;
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "hostel_id")
+    private Hostel hostel;
+
     public Student(String name, String enrollmentId){
         this.name = name;
         this.enrollmentId = enrollmentId;
     }
 
+    public Student(String name, String enrollmentId, Guide guide) {
+        this.name = name;
+        this.enrollmentId = enrollmentId;
+        this.guide = guide;
+    }
 }
