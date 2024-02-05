@@ -11,7 +11,11 @@ import java.util.Set;
 
 @Entity
 @Getter @Setter @NoArgsConstructor @ToString(exclude = {"students"})
-@NamedEntityGraph( name = "Guide.students",attributeNodes = { @NamedAttributeNode("students") } )
+@NamedEntityGraph(
+        name = "Guide.students.hostel",
+        attributeNodes = { @NamedAttributeNode(value = "students",subgraph = "hostel-subgraph") },
+        subgraphs = { @NamedSubgraph( name = "hostel-subgraph",  attributeNodes = { @NamedAttributeNode("hostel") } ) }
+)
 public class Guide {
 
     @Id

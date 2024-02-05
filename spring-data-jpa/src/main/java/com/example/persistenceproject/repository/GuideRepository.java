@@ -30,7 +30,8 @@ public interface GuideRepository extends JpaRepository<Guide,Long> {
     List<GuideNativeProjection> findByStaffId();
 
     @Override
-    @EntityGraph(value = "Guide.students",type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(value = "Guide.students.hostel",type = EntityGraph.EntityGraphType.LOAD)
+    //@EntityGraph(attributePaths = {"students"},type = EntityGraph.EntityGraphType.LOAD)
     //@EntityGraph(attributePaths = {"students"},type = EntityGraph.EntityGraphType.LOAD)
     Optional<Guide> findById(Long id);
 }

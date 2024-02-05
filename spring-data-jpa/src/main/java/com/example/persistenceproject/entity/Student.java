@@ -28,6 +28,10 @@ public class Student implements Serializable {
     @JoinColumn(name = "guide_id")
     private Guide guide;
 
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "hostel_id")
+    private Hostel hostel;
+
     public Student(String name, String enrollmentId){
         this.name = name;
         this.enrollmentId = enrollmentId;
